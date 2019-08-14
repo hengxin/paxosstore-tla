@@ -959,10 +959,11 @@ In this version (adopted from ``\ensuremath{PaxosStore.tla}''):
 }%
 \end{cpar}%
 \begin{cpar}{0}{F}{F}{0}{0}{}%
- \ensuremath{\.{-} Message} types (\ensuremath{i.e}., ``Prepare'', ``Accept'',
- ``\ensuremath{ACK}'') are deleted.
- No state flags (such as ``Prepare'', ``Wait-Prepare'', ``Accept'',
- ``Wait-Accept''
+ \ensuremath{\.{-} Message} types (\ensuremath{i.e}.,
+ \ensuremath{\@w{Prepare}}, \ensuremath{\@w{Accept}}, \ensuremath{\@w{ACK}})
+ are deleted.
+ No state flags (such as \ensuremath{\@w{Prepare}}, ``Wait-Prepare'',
+ \ensuremath{\@w{Accept}}, ``Wait-Accept''
  are needed.
 \end{cpar}%
 \end{lcom}%
@@ -998,8 +999,8 @@ In this version (adopted from ``\ensuremath{PaxosStore.tla}''):
 \@xx{}%
 \@pvspace{8.0pt}%
  \@x{\makebox[0pt][r]{\scriptsize 26\hspace{1em}} Quorum \.{\defeq} \{ Q
- \.{\in} {\SUBSET} Participant \.{:} Cardinality ( Q ) \.{*} 2 \.{=} NP \.{+}
- 1 \}}%
+ \.{\in} {\SUBSET} Participant \.{:} Cardinality ( Q ) \.{*} 2 \.{\geq} NP
+ \.{+} 1 \}}%
  \@x{\makebox[0pt][r]{\scriptsize 27\hspace{1em}} {\ASSUME} QuorumAssumption
  \.{\defeq}}%
  \@x{\makebox[0pt][r]{\scriptsize 28\hspace{1em}}\@s{16.4} \.{\land}\@s{10.73}
@@ -1080,9 +1081,9 @@ For simplicity, in this specification, we choose to send the complete state
  \@x{\makebox[0pt][r]{\scriptsize 65\hspace{1em}} Prepare ( p ,\, b )
  \.{\defeq}}%
  \@x{\makebox[0pt][r]{\scriptsize 66\hspace{1em}}\@s{16.4} \.{\land}\@s{6.34}
- state [ p ] [ p ] . maxBal \.{<} b}%
- \@x{\makebox[0pt][r]{\scriptsize 67\hspace{1em}}\@s{16.4} \.{\land}\@s{6.34}
  b \.{\in} Bals ( p )}%
+ \@x{\makebox[0pt][r]{\scriptsize 67\hspace{1em}}\@s{16.4} \.{\land}\@s{6.34}
+ state [ p ] [ p ] . maxBal \.{<} b}%
  \@x{\makebox[0pt][r]{\scriptsize 68\hspace{1em}}\@s{16.4} \.{\land}\@s{6.34}
  state \.{'} \.{=} [ state {\EXCEPT} {\bang} [ p ] [ p ] . maxBal \.{=} b ]}%
  \@x{\makebox[0pt][r]{\scriptsize 69\hspace{1em}}\@s{16.4} \.{\land}\@s{6.34}
@@ -1243,7 +1244,7 @@ For simplicity, in this specification, we choose to send the complete state
 \end{cpar}%
 \begin{cpar}{0}{F}{F}{0}{0}{}%
  \ensuremath{\.{\,\backslash\,}\.{*}} Last modified \ensuremath{Wed}
- \ensuremath{Aug} 14 16:09:53 \ensuremath{CST} 2019 by \ensuremath{hengxin
+ \ensuremath{Aug} 14 20:49:53 \ensuremath{CST} 2019 by \ensuremath{hengxin
 }%
 \end{cpar}%
 \begin{cpar}{0}{F}{F}{0}{0}{}%

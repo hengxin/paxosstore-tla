@@ -23,7 +23,7 @@ CONSTANTS
 None == CHOOSE b : b \notin Value
 NP == Cardinality(Participant) \* number of p \in Participants
 
-Quorum == {Q \in SUBSET Participant : Cardinality(Q) * 2 = NP + 1}
+Quorum == {Q \in SUBSET Participant : Cardinality(Q) * 2 >= NP + 1}
 ASSUME QuorumAssumption == 
     /\ \A Q \in Quorum : Q \subseteq Participant
     /\ \A Q1, Q2 \in Quorum : Q1 \cap Q2 # {}
@@ -63,8 +63,8 @@ Init ==
 p \in Participant starts the prepare phase by issuing a ballot b \in Ballot.
 *)
 Prepare(p, b) == 
-    /\ state[p][p].maxBal < b
     /\ b \in Bals(p)
+    /\ state[p][p].maxBal < b
     /\ state' = [state EXCEPT ![p][p].maxBal = b]
     /\ Send([from |-> p, to |-> Participant, state |-> state'[p]])                 
 (*
@@ -130,7 +130,7 @@ Consistency == Cardinality(chosen) <= 1
 THEOREM Spec => []Consistency
 =============================================================================
 \* Modification History
-\* Last modified Wed Aug 14 16:09:53 CST 2019 by hengxin
+\* Last modified Wed Aug 14 20:49:53 CST 2019 by hengxin
 \* Last modified Mon Jul 22 13:59:15 CST 2019 by pure_
 \* Last modified Mon Jun 03 21:26:09 CST 2019 by stary
 \* Last modified Wed May 09 21:39:31 CST 2018 by dell

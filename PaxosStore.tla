@@ -30,7 +30,7 @@ ASSUME QuorumAssumption ==
 Ballot == Nat
 
 PIndex == CHOOSE f \in [Participant -> 1 .. NP] : Injective(f)  \* TODO: (1) symmetry set? (2) model
-Bals(p) == {b \in Ballot : b % NP = PIndex[p] - 1} \* allocate ballots for each p \in Participant
+Bals(p) == {b \in Ballot : b % NP = PIndex[p] - 1} \* allocate ballots for p \in Participant
 -----------------------------------------------------------------------------
 State == [maxBal: Ballot \cup {-1},
          maxVBal: Ballot \cup {-1}, maxVVal: Value \cup {None}]
@@ -125,15 +125,13 @@ ChosenP(p) == \* the set of values chosen by p \in Participant
     {v \in Value : \E b \in Ballot : 
                        \E Q \in Quorum: \A q \in Q: /\ state[p][q].maxVBal = b
                                                     /\ state[p][q].maxVVal = v}
-
 chosen == UNION {ChosenP(p) : p \in Participant}
 
 Consistency == Cardinality(chosen) <= 1         
-
 THEOREM Spec => []Consistency
 =============================================================================
 \* Modification History
-\* Last modified Wed Aug 14 18:44:24 CST 2019 by hengxin
+\* Last modified Wed Aug 14 20:55:21 CST 2019 by hengxin
 \* Last modified Mon Jul 22 13:59:15 CST 2019 by pure_
 \* Last modified Mon Jun 03 21:26:09 CST 2019 by stary
 \* Last modified Wed May 09 21:39:31 CST 2018 by dell

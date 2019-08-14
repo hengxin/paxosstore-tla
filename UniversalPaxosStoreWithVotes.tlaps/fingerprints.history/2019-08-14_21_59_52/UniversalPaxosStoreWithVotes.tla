@@ -62,9 +62,7 @@ THEOREM SpecV => EV!Spec
     <2>1. UNCHANGED <<state, msgs, votes>> => UNCHANGED <<votes, maxBal>>
       BY DEF maxBal
     <2>2. TypeOKV' /\ NextV => EV!Next \/ UNCHANGED <<votes, maxBal>>
-      <3>. SUFFICES ASSUME TypeOKV', NextV
-                    PROVE  EV!Next \/ UNCHANGED <<votes, maxBal>>
-        OBVIOUS                  
+      <3> USE DEF TypeOKV, TypeOK
       <3>1. ASSUME NEW p \in Participant,
                    OnMessageV(p)
             PROVE  EV!Next \/ UNCHANGED <<votes, maxBal>>
@@ -73,7 +71,7 @@ THEOREM SpecV => EV!Spec
                    PrepareV(p, b)
             PROVE  EV!Next
         <4>1. EV!IncreaseMaxBal(p, b)
-          BY <3>2 DEF EV!IncreaseMaxBal, PrepareV, Prepare, Ballot, maxBal, TypeOKV, TypeOK, State
+          BY <3>2 DEF EV!IncreaseMaxBal, PrepareV, Prepare, Ballot, maxBal, TypeOKV
         <4>2. QED
           BY <3>2, <4>1 DEF EV!Next, EV!Ballot, Ballot
         (*
@@ -92,5 +90,5 @@ THEOREM SpecV => EV!Spec
     BY <1>1, <1>2, Invariant, PTL DEF SpecV, EV!Spec
 =============================================================================
 \* Modification History
-\* Last modified Wed Aug 14 22:09:16 CST 2019 by hengxin
+\* Last modified Wed Aug 14 21:59:47 CST 2019 by hengxin
 \* Created Wed Aug 14 14:05:06 CST 2019 by hengxin

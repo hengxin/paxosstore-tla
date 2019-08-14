@@ -4,7 +4,7 @@ Extend UniversalPaxosStore with an explicit record of votes
 that have been accepted by participants.
 This is used to demonstrate that UniversalPaxosStore refines EagerVoting.
 *)
-EXTENDS UniversalPaxosStore, TLC
+EXTENDS UniversalPaxosStore, TLAPS
 -----------------------------------------------------------------------------
 VARIABLE votes
 
@@ -45,6 +45,9 @@ NextV == \E p \in Participant : \/ OnMessageV(p)
                                                      \/ \E v \in Value : AcceptV(p, b, v)
 SpecV == InitV /\ [][NextV]_<<vars, votes>>
 -----------------------------------------------------------------------------
+THEOREM Invariant == SpecV => []TypeOKV
+  OMITTED
+-----------------------------------------------------------------------------
 (*
 UniversalPaxosStore refines EagerVoting.
 *)
@@ -53,7 +56,41 @@ maxBal == [p \in Participant |-> state[p][p].maxBal]
 EV == INSTANCE EagerVoting WITH Acceptor <- Participant
 
 THEOREM SpecV => EV!Spec
+  <1>1. InitV => EV!Init
+    BY DEF InitV, Init, EV!Init, InitState, maxBal
+  <1>2. TypeOKV' /\ [NextV]_<<vars, votes>> => [EV!Next]_<<votes, maxBal>>
+    <2>1. UNCHANGED <<state, msgs, votes>> => UNCHANGED <<votes, maxBal>>
+      BY DEF maxBal
+    <2>2. TypeOKV' /\ NextV => EV!Next \/ UNCHANGED <<votes, maxBal>>
+      <3>. SUFFICES ASSUME TypeOKV', NextV
+                    PROVE  EV!Next \/ UNCHANGED <<votes, maxBal>>
+        OBVIOUS                  
+      <3>1. ASSUME NEW p \in Participant,
+                   OnMessageV(p)
+            PROVE  EV!Next \/ UNCHANGED <<votes, maxBal>>
+      <3>2. ASSUME NEW p \in Participant,
+                   NEW b \in Ballot,
+                   PrepareV(p, b)
+            PROVE  EV!Next
+        <4>1. EV!IncreaseMaxBal(p, b)
+          BY <3>2, SMTT(60) DEF EV!IncreaseMaxBal, PrepareV, Prepare, Ballot, maxBal, TypeOKV, TypeOK
+        <4>2. QED
+          BY <3>2, <4>1 DEF EV!Next, EV!Ballot, Ballot
+        (*
+        BY <3>2 DEF TypeOKV, EV!TypeOK, TypeOK, EV!Next, EV!IncreaseMaxBal, EV!Ballot, PrepareV, Prepare, Ballot, maxBal
+        *)
+      <3>3. ASSUME NEW p \in Participant,
+                   NEW b \in Ballot,
+                   NEW v \in Value,
+                   AcceptV(p, b, v)
+            PROVE  EV!Next \/ UNCHANGED <<votes, maxBal>>
+      <3>4. QED
+        BY <3>1, <3>2, <3>3 DEF NextV
+    <2>3. QED
+      BY <2>1, <2>2 DEF vars
+  <1>3. QED
+    BY <1>1, <1>2, Invariant, PTL DEF SpecV, EV!Spec
 =============================================================================
 \* Modification History
-\* Last modified Wed Aug 14 16:06:44 CST 2019 by hengxin
+\* Last modified Wed Aug 14 22:07:23 CST 2019 by hengxin
 \* Created Wed Aug 14 14:05:06 CST 2019 by hengxin
