@@ -62,7 +62,7 @@ THEOREM SpecV => EV!Spec
     <2>1. UNCHANGED <<state, msgs, votes>> => UNCHANGED <<votes, maxBal>>
       BY DEF maxBal
     <2>2. TypeOKV' /\ NextV => EV!Next \/ UNCHANGED <<votes, maxBal>>
-      <3> USE DEF TypeOK, EV!Ballot, Ballot
+      <3>. USE DEF TypeOK, EV!Ballot, Ballot
       <3>1. ASSUME NEW q \in Participant,
                    OnMessageV(q),
                    <<votes, maxBal>>' # <<votes, maxBal>>
@@ -110,5 +110,5 @@ THEOREM SpecV => EV!Spec
     BY <1>1, <1>2, Invariant, PTL DEF SpecV, EV!Spec
 =============================================================================
 \* Modification History
-\* Last modified Thu Aug 15 16:15:18 CST 2019 by hengxin
+\* Last modified Thu Aug 15 16:13:41 CST 2019 by hengxin
 \* Created Wed Aug 14 14:05:06 CST 2019 by hengxin

@@ -62,7 +62,7 @@ THEOREM SpecV => EV!Spec
     <2>1. UNCHANGED <<state, msgs, votes>> => UNCHANGED <<votes, maxBal>>
       BY DEF maxBal
     <2>2. TypeOKV' /\ NextV => EV!Next \/ UNCHANGED <<votes, maxBal>>
-      <3> USE DEF TypeOK, EV!Ballot, Ballot
+      <3>. USE DEF TypeOK, EV!Ballot, Ballot
       <3>1. ASSUME NEW q \in Participant,
                    OnMessageV(q),
                    <<votes, maxBal>>' # <<votes, maxBal>>
@@ -70,7 +70,12 @@ THEOREM SpecV => EV!Spec
         <4>1. \E p \in Participant, b \in Ballot, v \in Value : EV!VoteFor(p, b, v)                     
           <5> SUFFICES ASSUME NEW m \in msgs,
                               /\ q \in m.to
-                              /\ UpdateStateV(q, m.from, m.state[m.from])
+                              /\ LET p == m.from
+                                 IN  UpdateStateV(q, p, m.state[p]) \* replacing UpdateState
+                              /\ IF \/ m.state[q].maxBal < state'[q][q].maxBal
+                                    \/ m.state[q].maxVBal < state'[q][q].maxVBal
+                                 THEN Send([from |-> q, to |-> {m.from}, state |-> state'[q]]) 
+                                 ELSE UNCHANGED msgs
                        PROVE  \E p \in Participant, b \in Ballot, v \in Value : EV!VoteFor(p, b, v)
             BY <3>1 DEF OnMessageV
           <5> QED
@@ -110,5 +115,5 @@ THEOREM SpecV => EV!Spec
     BY <1>1, <1>2, Invariant, PTL DEF SpecV, EV!Spec
 =============================================================================
 \* Modification History
-\* Last modified Thu Aug 15 16:15:18 CST 2019 by hengxin
+\* Last modified Thu Aug 15 16:12:26 CST 2019 by hengxin
 \* Created Wed Aug 14 14:05:06 CST 2019 by hengxin

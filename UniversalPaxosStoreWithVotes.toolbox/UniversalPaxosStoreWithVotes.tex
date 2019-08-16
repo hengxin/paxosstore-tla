@@ -1065,34 +1065,67 @@ Extend \ensuremath{UniversalPaxosStore} with an explicit record of votes
  \@x{\makebox[0pt][r]{\scriptsize 64\hspace{1em}}\@s{16.4}\@pfstepnum{2}{2.}\ 
  TypeOKV \.{'} \.{\land} NextV \.{\implies} EV {\bang} Next \.{\lor}
  {\UNCHANGED} {\langle} votes ,\, maxBal {\rangle}}%
- \@x{\makebox[0pt][r]{\scriptsize 65\hspace{1em}}\@s{24.59}\@pfstepnum{3}{} .
- {\SUFFICES} {\ASSUME} TypeOKV \.{'} ,\, NextV}%
- \@x{\makebox[0pt][r]{\scriptsize 66\hspace{1em}}\@s{84.44} {\PROVE}\@s{4.1}
- EV {\bang} Next \.{\lor} {\UNCHANGED} {\langle} votes ,\, maxBal {\rangle}}%
-\@x{\makebox[0pt][r]{\scriptsize 67\hspace{1em}}\@s{32.8} {\OBVIOUS}}%
- \@x{\makebox[0pt][r]{\scriptsize 68\hspace{1em}}\@s{24.59}\@pfstepnum{3}{1.}\
- {\ASSUME} {\NEW} p \.{\in} Participant ,\,}%
-\@x{\makebox[0pt][r]{\scriptsize 69\hspace{1em}}\@s{86.73} OnMessageV ( p )}%
- \@x{\makebox[0pt][r]{\scriptsize 70\hspace{1em}}\@s{48.48} {\PROVE}\@s{4.1}
- EV {\bang} Next \.{\lor} {\UNCHANGED} {\langle} votes ,\, maxBal {\rangle}}%
- \@x{\makebox[0pt][r]{\scriptsize 71\hspace{1em}}\@s{24.59}\@pfstepnum{3}{2.}\
- {\ASSUME} {\NEW} p \.{\in} Participant ,\,}%
- \@x{\makebox[0pt][r]{\scriptsize 72\hspace{1em}}\@s{86.73} {\NEW} b\@s{0.51}
- \.{\in} Ballot ,\,}%
- \@x{\makebox[0pt][r]{\scriptsize 73\hspace{1em}}\@s{86.73} PrepareV ( p ,\, b
- )}%
- \@x{\makebox[0pt][r]{\scriptsize 74\hspace{1em}}\@s{48.48} {\PROVE}\@s{4.1}
+ \@x{\makebox[0pt][r]{\scriptsize 65\hspace{1em}}\@s{24.59}\@pfstepnum{3}{}\ 
+ {\USE} {\DEF} TypeOK ,\, EV {\bang} Ballot ,\, Ballot}%
+ \@x{\makebox[0pt][r]{\scriptsize 66\hspace{1em}}\@s{24.59}\@pfstepnum{3}{1.}\
+ {\ASSUME} {\NEW} q \.{\in} Participant ,\,}%
+ \@x{\makebox[0pt][r]{\scriptsize 67\hspace{1em}}\@s{86.73} OnMessageV ( q )
+ ,\,}%
+ \@x{\makebox[0pt][r]{\scriptsize 68\hspace{1em}}\@s{86.73} {\langle} votes
+ ,\, maxBal {\rangle} \.{'} \.{\neq} {\langle} votes ,\, maxBal {\rangle}}%
+ \@x{\makebox[0pt][r]{\scriptsize 69\hspace{1em}}\@s{48.48} {\PROVE}\@s{4.1}
  EV {\bang} Next}%
- \@x{\makebox[0pt][r]{\scriptsize 75\hspace{1em}}\@s{32.8}\@pfstepnum{4}{1.}\ 
- EV {\bang} IncreaseMaxBal ( p ,\, b )}%
- \@x{\makebox[0pt][r]{\scriptsize 76\hspace{1em}}\@s{41.0}
- {\BY}\@pfstepnum{3}{2}\  {\DEF} EV {\bang} IncreaseMaxBal ,\, PrepareV ,\,
- Prepare ,\, Ballot ,\, maxBal ,\, TypeOKV ,\, TypeOK ,\, State}%
- \@x{\makebox[0pt][r]{\scriptsize 77\hspace{1em}}\@s{32.8}\@pfstepnum{4}{2.}\ 
+ \@x{\makebox[0pt][r]{\scriptsize 70\hspace{1em}}\@s{32.8}\@pfstepnum{4}{1.}\ 
+ \E\, p \.{\in} Participant ,\, b \.{\in} Ballot ,\, v \.{\in} Value \.{:} EV
+ {\bang} VoteFor ( p ,\, b ,\, v )}%
+ \@x{\makebox[0pt][r]{\scriptsize 71\hspace{1em}}\@s{41.0}\@pfstepnum{5}{}\ 
+ {\SUFFICES} {\ASSUME} {\NEW} m \.{\in} msgs ,\,}%
+ \@x{\makebox[0pt][r]{\scriptsize 72\hspace{1em}}\@s{139.64} \.{\land} q
+ \.{\in} m . to}%
+ \@x{\makebox[0pt][r]{\scriptsize 73\hspace{1em}}\@s{139.64} \.{\land}
+ UpdateStateV ( q ,\, m . from ,\, m . state [ m . from ] )}%
+ \@x{\makebox[0pt][r]{\scriptsize 74\hspace{1em}}\@s{101.39} {\PROVE}\@s{4.1}
+ \E\, p \.{\in} Participant ,\, b \.{\in} Ballot ,\, v \.{\in} Value \.{:} EV
+ {\bang} VoteFor ( p ,\, b ,\, v )}%
+ \@x{\makebox[0pt][r]{\scriptsize 75\hspace{1em}}\@s{49.2}
+ {\BY}\@pfstepnum{3}{1}\  {\DEF} OnMessageV}%
+ \@x{\makebox[0pt][r]{\scriptsize 76\hspace{1em}}\@s{41.0}\@pfstepnum{5}{}\ 
+ {\QED}}%
+ \@x{\makebox[0pt][r]{\scriptsize 77\hspace{1em}}\@s{32.8}\@pfstepnum{4}{}\ 
  {\QED}}%
  \@x{\makebox[0pt][r]{\scriptsize 78\hspace{1em}}\@s{41.0}
- {\BY}\@pfstepnum{3}{2} ,\,\@pfstepnum{4}{1}\  {\DEF} EV {\bang} Next ,\, EV
- {\bang} Ballot ,\, Ballot}%
+ {\BY}\@pfstepnum{3}{1} ,\,\@pfstepnum{4}{1}\  {\DEF} EV {\bang} Next}%
+ \@x{\makebox[0pt][r]{\scriptsize 79\hspace{1em}}\@s{24.59}\@pfstepnum{3}{2.}\
+ {\ASSUME} {\NEW} p \.{\in} Participant ,\,}%
+ \@x{\makebox[0pt][r]{\scriptsize 80\hspace{1em}}\@s{86.73} {\NEW} b\@s{0.51}
+ \.{\in} Ballot ,\,}%
+ \@x{\makebox[0pt][r]{\scriptsize 81\hspace{1em}}\@s{86.73} PrepareV ( p ,\, b
+ )}%
+ \@x{\makebox[0pt][r]{\scriptsize 82\hspace{1em}}\@s{48.48} {\PROVE}\@s{4.1}
+ EV {\bang} Next}%
+ \@x{\makebox[0pt][r]{\scriptsize 83\hspace{1em}}\@s{32.8}\@pfstepnum{4}{1.}\ 
+ EV {\bang} IncreaseMaxBal ( p ,\, b )}%
+ \@x{\makebox[0pt][r]{\scriptsize 84\hspace{1em}}\@s{41.0}\@pfstepnum{5}{1.}\ 
+ b \.{>} maxBal [ p ]}%
+ \@x{\makebox[0pt][r]{\scriptsize 85\hspace{1em}}\@s{49.2}
+ {\BY}\@pfstepnum{3}{2}\  {\DEF} maxBal ,\, PrepareV ,\, Prepare}%
+ \@x{\makebox[0pt][r]{\scriptsize 86\hspace{1em}}\@s{41.0}\@pfstepnum{5}{2.}\ 
+ maxBal \.{'} \.{=} [ maxBal {\EXCEPT} {\bang} [ p ] \.{=} b ]}%
+ \@x{\makebox[0pt][r]{\scriptsize 87\hspace{1em}}\@s{49.2}
+ {\BY}\@pfstepnum{3}{2}\  {\DEF} maxBal ,\, PrepareV ,\, Prepare ,\, Ballot}%
+ \@x{\makebox[0pt][r]{\scriptsize 88\hspace{1em}}\@s{41.0}\@pfstepnum{5}{3.}\ 
+ {\UNCHANGED} votes}%
+ \@x{\makebox[0pt][r]{\scriptsize 89\hspace{1em}}\@s{49.2}
+ {\BY}\@pfstepnum{3}{2}\  {\DEF} PrepareV}%
+ \@x{\makebox[0pt][r]{\scriptsize 90\hspace{1em}}\@s{41.0}\@pfstepnum{5}{4.}\ 
+ {\QED}}%
+ \@x{\makebox[0pt][r]{\scriptsize 91\hspace{1em}}\@s{49.2}
+ {\BY}\@pfstepnum{5}{1} ,\,\@pfstepnum{5}{2} ,\,\@pfstepnum{5}{3}\  {\DEF} EV
+ {\bang} IncreaseMaxBal}%
+ \@x{\makebox[0pt][r]{\scriptsize 92\hspace{1em}}\@s{32.8}\@pfstepnum{4}{2.}\ 
+ {\QED}}%
+ \@x{\makebox[0pt][r]{\scriptsize 93\hspace{1em}}\@s{41.0}
+ {\BY}\@pfstepnum{3}{2} ,\,\@pfstepnum{4}{1}\  {\DEF} EV {\bang} Next}%
 \begin{lcom}{20.0}%
 \begin{cpar}{0}{F}{F}{0}{0}{}%
  \ensuremath{{\BY}} \ensuremath{\@pfstepnum{3}{2}} \ensuremath{{\DEF}}
@@ -1103,39 +1136,45 @@ Extend \ensuremath{UniversalPaxosStore} with an explicit record of votes
 }%
 \end{cpar}%
 \end{lcom}%
- \@x{\makebox[0pt][r]{\scriptsize 82\hspace{1em}}\@s{24.59}\@pfstepnum{3}{3.}\
+ \@x{\makebox[0pt][r]{\scriptsize 97\hspace{1em}}\@s{24.59}\@pfstepnum{3}{3.}\
  {\ASSUME} {\NEW} p \.{\in} Participant ,\,}%
- \@x{\makebox[0pt][r]{\scriptsize 83\hspace{1em}}\@s{86.73} {\NEW} b\@s{0.51}
+ \@x{\makebox[0pt][r]{\scriptsize 98\hspace{1em}}\@s{86.73} {\NEW} b\@s{0.51}
  \.{\in} Ballot ,\,}%
- \@x{\makebox[0pt][r]{\scriptsize 84\hspace{1em}}\@s{86.73} {\NEW} v\@s{0.06}
+ \@x{\makebox[0pt][r]{\scriptsize 99\hspace{1em}}\@s{86.73} {\NEW} v\@s{0.06}
  \.{\in} Value ,\,}%
- \@x{\makebox[0pt][r]{\scriptsize 85\hspace{1em}}\@s{86.73} AcceptV ( p ,\, b
+ \@x{\makebox[0pt][r]{\scriptsize 100\hspace{1em}}\@s{86.73} AcceptV ( p ,\, b
  ,\, v )}%
- \@x{\makebox[0pt][r]{\scriptsize 86\hspace{1em}}\@s{48.48} {\PROVE}\@s{4.1}
+ \@x{\makebox[0pt][r]{\scriptsize 101\hspace{1em}}\@s{48.48} {\PROVE}\@s{4.1}
  EV {\bang} Next \.{\lor} {\UNCHANGED} {\langle} votes ,\, maxBal {\rangle}}%
- \@x{\makebox[0pt][r]{\scriptsize 87\hspace{1em}}\@s{24.59}\@pfstepnum{3}{4.}\
+ \@x{\makebox[0pt][r]{\scriptsize 102\hspace{1em}}\@s{32.8}\@pfstepnum{4}{1.}\
+ EV {\bang} VoteFor ( p ,\, b ,\, v )}%
+ \@x{\makebox[0pt][r]{\scriptsize 103\hspace{1em}}\@s{32.8}\@pfstepnum{4}{} .
  {\QED}}%
- \@x{\makebox[0pt][r]{\scriptsize 88\hspace{1em}}\@s{32.8}
+ \@x{\makebox[0pt][r]{\scriptsize 104\hspace{1em}}\@s{41.0}
+ {\BY}\@pfstepnum{3}{3} ,\,\@pfstepnum{4}{1}\  {\DEF} EV {\bang} Next}%
+ \@x{\makebox[0pt][r]{\scriptsize
+ 105\hspace{1em}}\@s{24.59}\@pfstepnum{3}{4.}\  {\QED}}%
+ \@x{\makebox[0pt][r]{\scriptsize 106\hspace{1em}}\@s{32.8}
  {\BY}\@pfstepnum{3}{1} ,\,\@pfstepnum{3}{2} ,\,\@pfstepnum{3}{3}\  {\DEF}
  NextV}%
- \@x{\makebox[0pt][r]{\scriptsize 89\hspace{1em}}\@s{16.4}\@pfstepnum{2}{3.}\ 
+ \@x{\makebox[0pt][r]{\scriptsize 107\hspace{1em}}\@s{16.4}\@pfstepnum{2}{3.}\
  {\QED}}%
- \@x{\makebox[0pt][r]{\scriptsize 90\hspace{1em}}\@s{24.59}
+ \@x{\makebox[0pt][r]{\scriptsize 108\hspace{1em}}\@s{24.59}
  {\BY}\@pfstepnum{2}{1} ,\,\@pfstepnum{2}{2}\  {\DEF} vars}%
- \@x{\makebox[0pt][r]{\scriptsize 91\hspace{1em}}\@s{8.2}\@pfstepnum{1}{3.}\ 
+ \@x{\makebox[0pt][r]{\scriptsize 109\hspace{1em}}\@s{8.2}\@pfstepnum{1}{3.}\ 
  {\QED}}%
- \@x{\makebox[0pt][r]{\scriptsize 92\hspace{1em}}\@s{16.4}
+ \@x{\makebox[0pt][r]{\scriptsize 110\hspace{1em}}\@s{16.4}
  {\BY}\@pfstepnum{1}{1} ,\,\@pfstepnum{1}{2} ,\, Invariant ,\, PTL {\DEF}
  SpecV ,\, EV {\bang} Spec}%
-\@x{\makebox[0pt][r]{\scriptsize 93\hspace{1em}}}\bottombar\@xx{}%
+\@x{\makebox[0pt][r]{\scriptsize 111\hspace{1em}}}\bottombar\@xx{}%
 \setboolean{shading}{false}
 \begin{lcom}{0}%
 \begin{cpar}{0}{F}{F}{0}{0}{}%
 \ensuremath{\.{\,\backslash\,}\.{*}} Modification History
 \end{cpar}%
 \begin{cpar}{0}{F}{F}{0}{0}{}%
- \ensuremath{\.{\,\backslash\,}\.{*}} Last modified \ensuremath{Wed}
- \ensuremath{Aug} 14 22:09:16 \ensuremath{CST} 2019 by \ensuremath{hengxin
+ \ensuremath{\.{\,\backslash\,}\.{*}} Last modified \ensuremath{Thu}
+ \ensuremath{Aug} 15 16:15:18 \ensuremath{CST} 2019 by \ensuremath{hengxin
 }%
 \end{cpar}%
 \begin{cpar}{0}{F}{F}{0}{0}{}%
